@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 19th Birthday, My Love! ✨💖</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337',
+                        },
+                        rosegold: {
+                            light: '#f7d6d0',
+                            DEFAULT: '#b76e79',
+                            dark: '#8b4852',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        cursive: ['Dancing Script', 'cursive'],
+                        romantic: ['Great Vibes', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Glassmorphism styling */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 20px 40px rgba(190, 18, 60, 0.08);
+        }
+
+        .dark-glass-card {
+            background: rgba(30, 10, 22, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(244, 63, 94, 0.25);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #be123c 0%, #fb7185 50%, #b76e79 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #d97706 0%, #fbbf24 50%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Animations */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(4deg); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.06); }
+        }
+
+        .animate-float {
+            animation: floatSlow 6s ease-in-out infinite;
+        }
+
+        .animate-pulse-glow {
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+
+        /* 3D Flip Card Effect */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner, .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1.5rem;
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Cake Candle Flames */
+        .flame {
+            width: 16px;
+            height: 24px;
+            background: linear-gradient(to top, #ff4500, #ffae00, #ffff99);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: 0 0 15px #ff8c00, 0 0 25px #ff4500;
+            animation: flicker 0.15s infinite alternate ease-in-out;
+            transform-origin: center bottom;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1) rotate(-2deg); opacity: 0.95; }
+            100% { transform: scale(1.15) rotate(2deg); opacity: 1; }
+        }
+
+        .smoke {
+            display: none;
+            position: absolute;
+            width: 8px;
+            height: 20px;
+            background: rgba(220, 220, 220, 0.7);
+            border-radius: 10px;
+            animation: rise 1.5s forwards ease-out;
+        }
+
+        @keyframes rise {
+            0% { opacity: 0.8; transform: translateY(0) scale(1); filter: blur(2px); }
+            100% { opacity: 0; transform: translateY(-40px) scale(3); filter: blur(6px); }
+        }
+
+        /* Envelope Animation */
+        .envelope-flap {
+            transform-origin: top;
+            transition: transform 0.6s ease-in-out;
+        }
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff1f2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fda4af;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f43f5e;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-rose-50 via-rose-100 to-pink-100 text-slate-800 antialiased relative min-h-screen overflow-x-hidden selection:bg-rose-300 selection:text-rose-900">
+
+    <!-- Interactive Ambient Canvas Background -->
+    <canvas id="ambientCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <!-- Floating Decorative Lights -->
+    <div class="fixed top-10 left-10 w-72 h-72 bg-rose-300/30 rounded-full blur-3xl pointer-events-none animate-pulse-glow z-0"></div>
+    <div class="fixed bottom-10 right-10 w-96 h-96 bg-pink-300/30 rounded-full blur-3xl pointer-events-none animate-pulse-glow z-0" style="animation-delay: 2s;"></div>
+
+    <!-- Floating Audio Control & Confetti Action Bar -->
+    <nav class="fixed top-4 right-4 z-50 flex items-center gap-3">
+        <button id="soundToggle" onclick="toggleMusic()" class="glass-card px-4 py-2.5 rounded-full shadow-lg flex items-center space-x-2 text-rose-700 hover:text-rose-900 transition-all duration-300 transform hover:scale-105 active:scale-95 text-xs sm:text-sm font-semibold">
+            <i id="soundIcon" class="fas fa-music text-rose-500 animate-bounce"></i>
+            <span id="soundText">Play Melody</span>
+        </button>
+
+        <button onclick="triggerConfettiBurst()" class="glass-card px-3.5 py-2.5 rounded-full shadow-lg text-rose-600 hover:text-rose-800 transition-all duration-300 transform hover:scale-105 active:scale-95 text-xs sm:text-sm font-semibold" title="Celebrate with Confetti!">
+            <i class="fas fa-sparkles text-amber-500"></i>
+        </button>
+    </nav>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-16 sm:space-y-24">
+
+        <!-- HERO SECTION -->
+        <section class="text-center pt-8 sm:pt-16 pb-4 relative">
+            <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-rose-200/60 border border-rose-300/80 text-rose-800 text-xs sm:text-sm font-medium tracking-wide shadow-sm animate-float">
+                ✨ Official 19th Birthday Celebration ✨
+            </div>
+            
+            <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-slate-900 leading-tight mb-4">
+                Happy <span class="text-gradient">19th Birthday</span>,<br class="hidden sm:inline"/> My Beautiful Girl! 💖
+            </h1>
+            
+            <p class="font-cursive text-2xl sm:text-3xl md:text-4xl text-rose-700 max-w-2xl mx-auto mb-8 font-semibold">
+                "19 beautiful years of brightness, sweetness, and magic..."
+            </p>
+
+            <!-- Countdown / Birthday Banner Container -->
+            <div id="countdownBox" class="glass-card max-w-2xl mx-auto p-6 sm:p-8 rounded-3xl shadow-xl transition-all duration-500 hover:shadow-2xl mb-8">
+                <h3 id="countdownHeader" class="text-xs uppercase tracking-widest text-rose-600 font-bold mb-4">
+                    Counting down to November 2nd
+                </h3>
+                
+                <div id="timerGrid" class="grid grid-cols-4 gap-2 sm:gap-4 text-center">
+                    <div class="bg-white/70 p-3 sm:p-4 rounded-2xl shadow-inner border border-rose-100">
+                        <span id="days" class="font-serif text-2xl sm:text-4xl font-bold text-rose-700">00</span>
+                        <span class="block text-xs sm:text-sm text-slate-500 mt-1 font-medium">Days</span>
+                    </div>
+                    <div class="bg-white/70 p-3 sm:p-4 rounded-2xl shadow-inner border border-rose-100">
+                        <span id="hours" class="font-serif text-2xl sm:text-4xl font-bold text-rose-700">00</span>
+                        <span class="block text-xs sm:text-sm text-slate-500 mt-1 font-medium">Hours</span>
+                    </div>
+                    <div class="bg-white/70 p-3 sm:p-4 rounded-2xl shadow-inner border border-rose-100">
+                        <span id="minutes" class="font-serif text-2xl sm:text-4xl font-bold text-rose-700">00</span>
+                        <span class="block text-xs sm:text-sm text-slate-500 mt-1 font-medium">Minutes</span>
+                    </div>
+                    <div class="bg-white/70 p-3 sm:p-4 rounded-2xl shadow-inner border border-rose-100">
+                        <span id="seconds" class="font-serif text-2xl sm:text-4xl font-bold text-rose-700">00</span>
+                        <span class="block text-xs sm:text-sm text-slate-500 mt-1 font-medium">Seconds</span>
+                    </div>
+                </div>
+
+                <div id="bdayBanner" class="hidden py-2">
+                    <div class="text-3xl sm:text-4xl font-romantic text-rose-600 font-bold mb-2">🎉 Happy 19th Birthday My Love! 🎉</div>
+                    <p class="text-slate-700 text-sm sm:text-base">Today is all about you! Make a wish, blow out the candles, and let's celebrate!</p>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="animate-bounce pt-4 text-rose-400">
+                <i class="fas fa-chevron-down text-xl"></i>
+            </div>
+        </section>
+
+
+        <!-- INTERACTIVE CAKE & BLOW CANDLE EXPERIENCE -->
+        <section class="py-8">
+            <div class="text-center mb-8">
+                <span class="text-xs font-bold uppercase tracking-widest text-rose-600 bg-rose-200/50 px-3 py-1 rounded-full">Interactive Cake</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 mt-3">Make a Birthday Wish! 🎂</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-2">Tap/click the candles on your 19th birthday cake to blow them out!</p>
+            </div>
+
+            <div class="glass-card max-w-lg mx-auto p-8 rounded-3xl text-center relative overflow-hidden flex flex-col items-center justify-center min-h-[360px]">
+                
+                <!-- Cake Container -->
+                <div class="relative mt-8 mb-4 cursor-pointer group" onclick="blowOutCandles()">
+                    
+                    <!-- CANDLES -->
+                    <div class="absolute -top-16 left-1/2 transform -translate-x-1/2 flex gap-8 z-20">
+                        <!-- Candle 1 -->
+                        <div class="relative flex flex-col items-center">
+                            <div id="flame1" class="flame"></div>
+                            <div id="smoke1" class="smoke -top-4"></div>
+                            <div class="w-4 h-12 bg-gradient-to-t from-amber-200 to-rose-300 rounded-t-sm shadow-md flex items-center justify-center font-bold text-xs text-rose-800">1</div>
+                        </div>
+                        <!-- Candle 9 -->
+                        <div class="relative flex flex-col items-center">
+                            <div id="flame2" class="flame"></div>
+                            <div id="smoke2" class="smoke -top-4"></div>
+                            <div class="w-4 h-12 bg-gradient-to-t from-amber-200 to-rose-300 rounded-t-sm shadow-md flex items-center justify-center font-bold text-xs text-rose-800">9</div>
+                        </div>
+                    </div>
+
+                    <!-- CAKE TOP LAYER -->
+                    <div class="w-48 h-16 bg-gradient-to-r from-rose-300 via-pink-200 to-rose-300 rounded-t-full shadow-md relative z-10 border-b-4 border-rose-400 flex items-center justify-center">
+                        <div class="w-full h-3 bg-white/60 absolute top-3 rounded-full blur-[1px]"></div>
+                        <span class="text-xs font-serif text-rose-700/80 font-bold tracking-wider">HAPPY 19TH</span>
+                    </div>
+
+                    <!-- CAKE BOTTOM LAYER -->
+                    <div class="w-64 h-24 bg-gradient-to-r from-pink-400 via-rose-300 to-pink-400 rounded-b-3xl shadow-xl relative border-t-2 border-rose-200 flex items-center justify-center">
+                        <!-- Cake Decorations -->
+                        <div class="flex space-x-3 text-rose-200 text-xs">
+                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-sparkles"></i>
+                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-sparkles"></i>
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+
+                    <!-- CAKE PLATE -->
+                    <div class="w-72 h-4 bg-slate-200 rounded-full shadow-lg -mt-1 mx-auto border-t border-white"></div>
+                </div>
+
+                <!-- Wish Message Modal / Popup -->
+                <div id="wishMessage" class="hidden mt-6 p-4 bg-rose-50 border border-rose-200 rounded-2xl animate-fade-in">
+                    <p class="font-cursive text-2xl text-rose-700 font-bold">✨ "Wish blown into the universe!" ✨</p>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-1">May your 19th year bring you infinite joy, love, laughter, and all your dreams fulfilled!</p>
+                </div>
+
+                <p id="candleInstruction" class="text-xs text-rose-500 font-medium mt-4 animate-pulse">
+                    <i class="fas fa-hand-pointer mr-1"></i> Tap the candles to blow them out & make a wish!
+                </p>
+            </div>
+        </section>
+
+
+        <!-- REASONS WHY I LOVE YOU (3D TILT CARDS GRID) -->
+        <section class="py-8">
+            <div class="text-center mb-12">
+                <span class="text-xs font-bold uppercase tracking-widest text-rose-600 bg-rose-200/50 px-3 py-1 rounded-full">19 Reasons & Memories</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 mt-3">Why You Are So Special 💖</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-2">Tap each card to reveal sweet cards of love as you turn 19!</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Card 1 -->
+                <div class="flip-card h-64 perspective-1000 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center text-center">
+                            <div class="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 text-xl mb-4">
+                                <i class="fas fa-smile-beam"></i>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-slate-800">Your Smile</h3>
+                            <p class="text-xs text-rose-500 mt-2">Tap to flip ✨</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-rose-500 to-pink-600 text-white p-6 flex flex-col items-center justify-center text-center shadow-xl">
+                            <p class="font-sans text-sm leading-relaxed">"Your smile brightens up my darkest days instanty. It's truly my favorite view in the world."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="flip-card h-64 perspective-1000 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center text-center">
+                            <div class="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 text-xl mb-4">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-slate-800">Your Kindness</h3>
+                            <p class="text-xs text-rose-500 mt-2">Tap to flip ✨</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-rose-500 to-pink-600 text-white p-6 flex flex-col items-center justify-center text-center shadow-xl">
+                            <p class="font-sans text-sm leading-relaxed">"The gentle way you care for people and your loving heart make me fall for you more every day."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="flip-card h-64 perspective-1000 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center text-center">
+                            <div class="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 text-xl mb-4">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-slate-800">Late Night Talks</h3>
+                            <p class="text-xs text-rose-500 mt-2">Tap to flip ✨</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-rose-500 to-pink-600 text-white p-6 flex flex-col items-center justify-center text-center shadow-xl">
+                            <p class="font-sans text-sm leading-relaxed">"I treasure every late-night conversation, laughing about everything and sharing our biggest dreams."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="flip-card h-64 perspective-1000 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center text-center">
+                            <div class="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 text-xl mb-4">
+                                <i class="fas fa-laugh-squint"></i>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-slate-800">Your Laugh</h3>
+                            <p class="text-xs text-rose-500 mt-2">Tap to flip ✨</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-rose-500 to-pink-600 text-white p-6 flex flex-col items-center justify-center text-center shadow-xl">
+                            <p class="font-sans text-sm leading-relaxed">"Your laughter is the sweetest melody. Nothing makes me happier than making you laugh."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="flip-card h-64 perspective-1000 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center text-center">
+                            <div class="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 text-xl mb-4">
+                                <i class="fas fa-compass"></i>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-slate-800">Our Adventures</h3>
+                            <p class="text-xs text-rose-500 mt-2">Tap to flip ✨</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-rose-500 to-pink-600 text-white p-6 flex flex-col items-center justify-center text-center shadow-xl">
+                            <p class="font-sans text-sm leading-relaxed">"Whether we're going on big trips or just getting ice cream, every moment with you is an adventure."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="flip-card h-64 perspective-1000 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center text-center">
+                            <div class="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 text-xl mb-4">
+                                <i class="fas fa-sparkles"></i>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-slate-800">Your 19th Year</h3>
+                            <p class="text-xs text-rose-500 mt-2">Tap to flip ✨</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-rose-500 to-pink-600 text-white p-6 flex flex-col items-center justify-center text-center shadow-xl">
+                            <p class="font-sans text-sm leading-relaxed">"Entering 19 with so much beauty, grace, and potential. I am so lucky to stand by your side."</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- INTERACTIVE LOVE LETTER ENVELOPE -->
+        <section class="py-8">
+            <div class="text-center mb-8">
+                <span class="text-xs font-bold uppercase tracking-widest text-rose-600 bg-rose-200/50 px-3 py-1 rounded-full">A Birthday Letter For You</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 mt-3">Open Your Love Note 💌</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-2">Tap the envelope to unseal a special message written just for you.</p>
+            </div>
+
+            <div class="max-w-xl mx-auto">
+                <div id="envelope" class="envelope glass-card rounded-3xl p-6 sm:p-10 cursor-pointer transition-all duration-500 hover:shadow-2xl border border-rose-200 relative overflow-hidden" onclick="toggleLetter()">
+                    
+                    <!-- ENVELOPE HEADER STATE -->
+                    <div id="letterClosedState" class="text-center py-8">
+                        <div class="w-20 h-20 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-4 text-rose-500 text-3xl animate-bounce">
+                            <i class="fas fa-envelope-open-text"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-slate-800">To My Dearest Girlfriend</h3>
+                        <p class="text-xs text-rose-500 font-medium mt-2">Click to open your 19th Birthday letter 💌</p>
+                    </div>
+
+                    <!-- LETTER CONTENT (Initially Hidden) -->
+                    <div id="letterOpenState" class="hidden space-y-4 text-slate-700 font-sans leading-relaxed text-sm sm:text-base animate-fade-in">
+                        <div class="border-b border-rose-200 pb-4 text-center">
+                            <span class="font-romantic text-3xl text-rose-600 block">Happy 19th Birthday, My Love!</span>
+                            <span class="text-xs text-slate-400">November 2nd</span>
+                        </div>
+                        
+                        <p>
+                            To my incredible girlfriend as you turn 19 today,
+                        </p>
+                        <p>
+                            Words will never be enough to express how thankful I am for your presence in my life. You bring so much light, comfort, warmth, and sweetness into every single day.
+                        </p>
+                        <p>
+                            Turning 19 is such a special milestone—a year full of new opportunities, growth, unforgettable adventures, and beautiful memories. I promise to support your dreams, cherish your heart, and love you unconditionally through every step of this journey.
+                        </p>
+                        <p>
+                            May this 19th birthday bring you as much happiness as you give to everyone around you. You deserve all the magic the world has to offer.
+                        </p>
+                        
+                        <div class="pt-6 text-right">
+                            <p class="font-cursive text-2xl text-rose-600 font-bold">Forever & Always Yours ❤️</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- GRAND FINALE & CONFETTI BUTTON -->
+        <section class="text-center py-12">
+            <div class="glass-card max-w-2xl mx-auto p-8 rounded-3xl shadow-xl space-y-6">
+                <div class="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto text-rose-500 text-2xl animate-float">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900">Here's to Your 19th Chapter! ✨</h2>
+                <p class="text-slate-600 text-sm sm:text-base max-w-md mx-auto">
+                    Let's make this day unforgettable. Tap the button below anytime to rain confetti and celebrate!
+                </p>
+                <button onclick="triggerConfettiBurst()" class="bg-gradient-to-r from-rose-500 via-pink-500 to-rose-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold px-8 py-4 rounded-full shadow-lg hover:shadow-rose-500/40 transform hover:-translate-y-1 active:translate-y-0 transition-all duration-300 text-base sm:text-lg inline-flex items-center space-x-3">
+                    <i class="fas fa-glass-cheers text-xl"></i>
+                    <span>Shower With Love & Confetti!</span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="relative z-10 text-center py-8 text-xs text-rose-400 font-medium border-t border-rose-200/50">
+        Crafted with ❤️ for your 19th Birthday • November 2nd
+    </footer>
+
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* ----------------------------------------------------
+           1. Dynamic Birthday Countdown / Banner (Nov 2)
+        ---------------------------------------------------- */
+        function updateCountdown() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            
+            // Birthday: November 2nd
+            let bday = new Date(currentYear, 10, 2); // Month is 0-indexed (10 = Nov)
+
+            // If birthday passed this year, set for next year
+            if (now.getTime() > bday.getTime() + (24 * 60 * 60 * 1000)) {
+                bday.setFullYear(currentYear + 1);
+            }
+
+            const diff = bday - now;
+
+            // Check if today is November 2nd
+            if (now.getMonth() === 10 && now.getDate() === 2) {
+                document.getElementById('timerGrid').classList.add('hidden');
+                document.getElementById('countdownHeader').classList.add('hidden');
+                document.getElementById('bdayBanner').classList.remove('hidden');
+                return;
+            }
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = String(days).padStart(2, '0');
+                document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+                document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+
+        /* ----------------------------------------------------
+           2. Ambient Floating Hearts / Light Particles Canvas
+        ---------------------------------------------------- */
+        const canvas = document.getElementById('ambientCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class HeartParticle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100;
+                this.size = Math.random() * 12 + 8;
+                this.speedY = Math.random() * 1 + 0.5;
+                this.speedX = Math.sin(Math.random() * Math.PI) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+                this.color = `rgba(244, 63, 94, ${this.opacity})`;
+            }
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                if (this.y < -20) this.reset();
+            }
+            draw() {
+                ctx.save();
+                ctx.fillStyle = this.color;
+                ctx.font = `${this.size}px sans-serif`;
+                ctx.fillText('❤️', this.x, this.y);
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 25; i++) {
+            particles.push(new HeartParticle());
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+
+        /* ----------------------------------------------------
+           3. Birthday Cake & Blow Out Candle Interaction
+        ---------------------------------------------------- */
+        let candlesBlown = false;
+
+        function blowOutCandles() {
+            if (candlesBlown) return;
+            candlesBlown = true;
+
+            // Extinguish flames
+            document.getElementById('flame1').style.display = 'none';
+            document.getElementById('flame2').style.display = 'none';
+
+            // Show smoke
+            document.getElementById('smoke1').style.display = 'block';
+            document.getElementById('smoke2').style.display = 'block';
+
+            // Hide instruction & show wish popup
+            document.getElementById('candleInstruction').classList.add('hidden');
+            document.getElementById('wishMessage').classList.remove('hidden');
+
+            // Play Chime Sound Synthesizer
+            playChimeSound();
+
+            // Fire Confetti Burst
+            triggerConfettiBurst();
+        }
+
+
+        /* ----------------------------------------------------
+           4. Love Letter Toggle
+        ---------------------------------------------------- */
+        function toggleLetter() {
+            const closedState = document.getElementById('letterClosedState');
+            const openState = document.getElementById('letterOpenState');
+            const envelope = document.getElementById('envelope');
+
+            if (openState.classList.contains('hidden')) {
+                closedState.classList.add('hidden');
+                openState.classList.remove('hidden');
+                envelope.classList.add('border-rose-400');
+                triggerConfettiBurst();
+            }
+        }
+
+
+        /* ----------------------------------------------------
+           5. Confetti Explosions (Canvas-Confetti)
+        ---------------------------------------------------- */
+        function triggerConfettiBurst() {
+            if (typeof confetti === 'function') {
+                // Multi-stage confetti celebration
+                confetti({
+                    particleCount: 80,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#f43f5e', '#fb7185', '#fbbf24', '#e11d48', '#ffffff']
+                });
+
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 50,
+                        angle: 60,
+                        spread: 55,
+                        origin: { x: 0 },
+                        colors: ['#f43f5e', '#fb7185', '#b76e79']
+                    });
+                }, 200);
+
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 50,
+                        angle: 120,
+                        spread: 55,
+                        origin: { x: 1 },
+                        colors: ['#f43f5e', '#fbbf24', '#ffffff']
+                    });
+                }, 400);
+            }
+        }
+
+
+        /* ----------------------------------------------------
+           6. Web Audio API Chime & Music Synthesizer
+        ---------------------------------------------------- */
+        let audioCtx = null;
+        let isPlaying = false;
+        let melodyInterval = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        // Play gentle chime when blowing candles
+        function playChimeSound() {
+            initAudio();
+            if (!audioCtx) return;
+
+            const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+            notes.forEach((freq, index) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.12);
+                
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime + index * 0.12);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + index * 0.12 + 0.8);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(audioCtx.currentTime + index * 0.12);
+                osc.stop(audioCtx.currentTime + index * 0.12 + 0.8);
+            });
+        }
+
+        // Romantic Background Melody Loop (Synthesized)
+        function toggleMusic() {
+            initAudio();
+            const soundText = document.getElementById('soundText');
+            const soundIcon = document.getElementById('soundIcon');
+
+            if (isPlaying) {
+                clearInterval(melodyInterval);
+                isPlaying = false;
+                soundText.innerText = 'Play Melody';
+                soundIcon.className = 'fas fa-music text-rose-500';
+            } else {
+                isPlaying = true;
+                soundText.innerText = 'Pause Melody';
+                soundIcon.className = 'fas fa-pause text-rose-600 animate-pulse';
+
+                // Play soft romantic arpeggio notes continuously
+                const melodyNotes = [261.63, 329.63, 392.00, 440.00, 392.00, 329.63];
+                let noteIndex = 0;
+
+                melodyInterval = setInterval(() => {
+                    if (!isPlaying) return;
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(melodyNotes[noteIndex], audioCtx.currentTime);
+                    
+                    gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 1.2);
+
+                    noteIndex = (noteIndex + 1) % melodyNotes.length;
+                }, 600);
+            }
+        }
+    </script>
+</body>
+</html>
